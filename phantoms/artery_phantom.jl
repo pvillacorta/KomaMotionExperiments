@@ -8,7 +8,7 @@ L = 4e-2     # [m] Artery length
 v = 10e-2 #[m/s]
 
 #PARAMETERS
-N = 10
+N = 15
 Δxr = FOV/(N-1) #Aprox rec resolution, use Δx_pix and Δy_pix
 Ns = 5 #number of spins per voxel
 Δx = Δxr/sqrt(Ns) #spin separation
@@ -35,7 +35,7 @@ z = 0*xx .+ 0*yy .+ 1*zz
 ⚪(R) =  (x.^2 .+ y.^2 .<= R^2) #ircle of radius R
 # Water spins
 R = FOV/2
-r = 8/11*FOV/2
+r = 5/11*FOV/2
 
 # -------------- Tissue phantom -----------------
 tissue = ⚪(R) - ⚪(r)
@@ -120,4 +120,4 @@ obj.T1 .= 1026 * 1e-3
 obj.T2 .= 42  * 1e-3   
 
 ## 2. Write (and read) phantom into a file
-write_phantom(obj, "../artery.phantom")
+write_phantom(obj, "artery.phantom")
