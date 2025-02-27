@@ -2,3 +2,4 @@
 *.svg
 *.jpg
 *.phantom
+**/results/
