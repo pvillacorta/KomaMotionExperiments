@@ -4,22 +4,22 @@ This folder contains the code neccesary to recreate the experiments conducted in
 
 ## Demonstrative Experiments
 
-- **4.1.1a: Simulation of patient motion and motion-corrected reconstruction**
+- **4.1.2a: Simulation of patient motion and motion-corrected reconstruction**
 
     Simple example that shows the effect of patient motion during an MRI scan.
     The code is not in this folder but hosted at:
     https://juliahealth.org/KomaMRI.jl/stable/tutorial/05-SimpleMotion/
 
 
-- **4.1.1b: Cardiac cine over an XCAT phantom**
+- **4.1.2b: Cardiac cine over an XCAT phantom**
 
     2D cine acquisition of a XCAT heart phantom model.
 
-- **4.1.1c: Time of Flight (TOF) acquisition over a user-defined flow phantom**
+- **4.1.2c: Time of Flight (TOF) acquisition over a user-defined flow phantom**
 
     2D cine acquisition of a flow cylinder phantom, in which Time of Flight (TOF) effect is demonstrated.
 
-- **4.1.1d: Phase Contrast (PC) imaging of a user-made phantom and a realistic aorta**
+- **4.1.2d: Phase Contrast (PC) imaging of a user-made phantom and a realistic aorta**
 
     This section contains two Phase Constrast (PC) experiments over two different phantoms:
     - User-defined flow phantom, which consists of two parallel flow cylinders, with blood flowing along opposite directions.
@@ -27,7 +27,7 @@ This folder contains the code neccesary to recreate the experiments conducted in
 
 ## Comparative Experiments
 
-- **4.1.2a: Myocardial tagging over a user-defined phantom**
+- **4.1.3a: Myocardial tagging over a user-defined phantom**
 
     2D cine tagging acquisition, which recreates the tagging experiment conducted in:
 
@@ -35,14 +35,14 @@ This folder contains the code neccesary to recreate the experiments conducted in
     https://doi.org/10.1186/1532-429X-16-48
 
 
-- **4.1.2b: Validation of the Bloch solver under flow motion conditions**
+- **4.1.3b: Validation of the Bloch solver under flow motion conditions**
 
     This experiment recreates the one oconducted in Section 4.1 from:
 
     Puiseux T, Sewonu A, Moreno R, Mendez S, Nicoud F. *Numerical simulation of time-resolved 3D phase-contrast magnetic resonance imaging*. PLOS ONE 2021 16(3)
     https://doi.org/10.1371/journal.pone.0248816 
 
-- **4.1.2c: Turbulent flow with velocity encoded spoiled GRE**
+- **4.1.3c: Turbulent flow with velocity encoded spoiled GRE**
 
     Spoiled GRE PC acquisition over a stenotic U-bend flow phantom. 
     This recreates the experiment carried out in Sections 2.8.1 and 3.2 from:
