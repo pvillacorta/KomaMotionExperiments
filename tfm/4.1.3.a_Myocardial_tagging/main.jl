@@ -8,7 +8,7 @@ include("ring3D_phantom.jl")
 
 # Generate phantom and store it in a .phantom file
 phantom = ring3D_phantom()
-write_phantom(phantom, "ring3D.phantom")
+write_phantom(phantom, "../phantoms/ring3D.phantom")
 
 DEVICES = [3,2,1,0] # IDs of the GPUs that we want to use. 
                     # This is limited to the number of GPUs of your system
@@ -21,7 +21,7 @@ println("----------- Small simulation to initialize all GPUs --------------")
     using KomaMRI, CUDA
     MAX_SPINS_PER_GPU = 1_000_000
     ## --------------------------- PHANTOM ----------------------------
-    obj = read_phantom("ring3D.phantom")
+    obj = read_phantom("../phantoms/ring3D.phantom")
     
     ## --------------------------- SYSTEM ---------------------------- 
     sys = Scanner(B0 = 1.5, seq_Δt = 10e-6)
@@ -191,7 +191,7 @@ println("\n----------- Starting simulations --------------")
     MAX_SPINS_PER_GPU = 1_000_000
 
     ## --------------------------- PHANTOM ---------------------------- 
-    obj = read_phantom("ring3D.phantom")
+    obj = read_phantom("../phantoms/ring3D.phantom")
     
     ## --------------------------- SYSTEM ---------------------------- 
     sys = Scanner(B0 = 1.5, seq_Δt = 10e-6)
