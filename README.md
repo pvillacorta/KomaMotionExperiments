@@ -4,7 +4,7 @@ This repository contains a set of experiments related to publications of the Kom
 
 ## Directory Structure
 
-- `/tfm`: Contains the experiments carried out in Section 4.1 of the Master's Thesis:
+- `[/tfm](https://github.com/pvillacorta/KomaMotionExperiments/tree/main/tfm)`: Contains the experiments carried out in Section 4.1 of the Master's Thesis:
 
   *Contributions to Advanced Magnetic Resonance Imaging Simulation: A Model for Dynamic Simulation and a Web Interface for Pulse Sequence Development and Visualization*.
 
