@@ -1,4 +1,4 @@
-using LinearAlgebra, StatsBase
+using LinearAlgebra
 
 """
 	bipolar = bipolar_gradients(venc, direction, delay, sys)
