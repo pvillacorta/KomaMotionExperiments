@@ -1,4 +1,4 @@
-cd("/home/export/personal/pvilayl/koma_tests/4.1.3.c Turbulent flow sUbend/")
+cd(@__DIR__)
 
 using KomaMRI, JSON3, StatsBase, JLD2
 using CUDA
