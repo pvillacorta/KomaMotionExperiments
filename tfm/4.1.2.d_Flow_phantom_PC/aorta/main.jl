@@ -109,18 +109,17 @@ for (i, orientation) in enumerate(["axial", "longitudinal"])
         phase_diff_masked_plot = plot_image(phase_diff_masked .* 1.35, title="Phase(A) - Phase(B) masked, venc = $(round(venc * 1e2)) cm/s", zmin=-π, zmax=π, colorscale=custom_colorscale)
 
         # Save results
-        results_dir = "results_aorta"
+        results_dir = "results"
         filename = "$(results_dir)/$(orientation)_$(v_direction)_"
 
         if !isdir(results_dir)
             mkdir(results_dir)
         end
 
-        KomaMRIPlots.PlotlyJS.savefig(phase_a_plot, "$(filename)phase_a.png")
-        KomaMRIPlots.PlotlyJS.savefig(phase_b_plot, "$(filename)phase_b.png")
-        KomaMRIPlots.PlotlyJS.savefig(magnitude_mean_plot, "$(filename)magnitude_mean.png")
-        KomaMRIPlots.PlotlyJS.savefig(phase_diff_plot, "$(filename)phase_diff.png")
-        KomaMRIPlots.PlotlyJS.savefig(phase_diff_masked_plot, "$(filename)phase_diff_masked.png") 
-
+        KomaMRIPlots.PlotlyJS.savefig(phase_a_plot, filename*"phase_a.png")
+        KomaMRIPlots.PlotlyJS.savefig(phase_b_plot*"phase_b.png")
+        KomaMRIPlots.PlotlyJS.savefig(magnitude_mean_plot*"magnitude_mean.png")
+        KomaMRIPlots.PlotlyJS.savefig(phase_diff_plot*"phase_diff.png")
+        KomaMRIPlots.PlotlyJS.savefig(phase_diff_masked_plot*"phase_diff_masked.png") 
     end
 end
