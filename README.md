@@ -1,6 +1,6 @@
 # KomaMRI Motion Experiments
 
-This repository contains a set of experiments related to publications of the KomaMRI project, specifically those focused on dynamic phantoms. The experiments are organized into directories, each corresponding to a different publication.
+This repository contains a set of experiments related to publications of the [KomaMRI](https://github.com/JuliaHealth/KomaMRI.jl) project, specifically those focused on dynamic phantoms. The experiments are organized into directories, each corresponding to a different publication.
 
 ## Directory Structure
 
