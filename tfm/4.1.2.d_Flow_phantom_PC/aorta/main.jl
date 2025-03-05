@@ -5,7 +5,7 @@ using KomaMRI, CUDA
 include("../../sequences/EPI.jl")
 
 ## ---- Phantom ---- 
-obj = read_phantom("../../phantoms/aorta.phantom")
+obj = read_phantom("../../phantoms/aorta.phantom") # This file must be downloaded from Zenodo: https://shorturl.at/G8Dsc
 
 rotate = Rotate(0f0, 0f0, 90f0, TimeRange(0f0, 1f-7))
 obj.motion = MotionList(obj.motion, rotate)

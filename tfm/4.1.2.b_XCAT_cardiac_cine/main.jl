@@ -8,9 +8,9 @@ include("../utils/plot_cine.jl")
 include("../sequences/bSSFP.jl")
 
 ## Phantom ------------------------------
-obj = read_phantom("../phantoms/XCAT_heart.phantom") # Download it from ZENODO
-obj[abs.(obj.z) .< 0.005]                            # 1 cm-high subset along the z dimension
-plot_phantom_map(obj,:T1; time_samples=10)           # Plot the phantom
+obj = read_phantom("../phantoms/XCAT_heart.phantom") # This file must be downloaded from Zenodo: https://shorturl.at/G8Dsc
+obj[abs.(obj.z) .< 0.005]  # 1 cm-high subset along the z dimension
+plot_phantom_map(obj,:T1; time_samples=10)  # Plot the phantom
 
 ## Scanner ------------------------------
 sys = Scanner()
