@@ -1,18 +1,15 @@
 cd(@__DIR__)
 
-using KomaMRI, CUDA
+using KomaMRI, CUDA, JLD2, StatsBase
 
 include("../../sequences/EPI.jl")
+include("rotate_aorta.jl")
 
 ## ---- Phantom ---- 
-obj = read_phantom("../../phantoms/aorta.phantom") # This file must be downloaded from Zenodo: https://shorturl.at/G8Dsc
-
-rotate = Rotate(0f0, 0f0, 90f0, TimeRange(0f0, 1f-7))
-obj.motion = MotionList(obj.motion, rotate)
-
+obj = read_phantom("../../phantoms/aorta_new.phantom") # This file must be downloaded from Zenodo: https://shorturl.at/G8Dsc
+obj = rotate_aorta(obj)
 ## ---- Scanner ---- 
 sys = Scanner()
-
 for (i, orientation) in enumerate(["axial", "longitudinal"])
     for (j, v_direction) in enumerate(["vx", "vy", "vz"])
         ## ---- Sequence - PC-EPI -------
@@ -43,8 +40,7 @@ for (i, orientation) in enumerate(["axial", "longitudinal"])
         raws = []
         for seq in seqs
             sim_params = KomaMRICore.default_sim_params()
-            # sim_params["Nblocks"] = 2*length(seq)
-            sim_params["Nblocks"] = 800
+            sim_params["Nblocks"] = 3000
             sim_params["Δt"]    = 8e-4
             sim_params["Δt_rf"] = 1e-5
             push!(raws, simulate(obj[1:2_000_000], seq, sys; sim_params=sim_params))
@@ -85,28 +81,32 @@ for (i, orientation) in enumerate(["axial", "longitudinal"])
         ## Plot and save results
         # Magnitude
         magnitude_mean = (abs.(recons[1][:,:,1]) .+   abs.(recons[2][:,:,1])) ./ 2
-        magnitude_mean_plot = plot_image(magnitude_mean,  title="Magnitude Mean(A, B)")
+        magnitude_mean_plot = plot_image(magnitude_mean,  title="Magnitude Mean(A, B)", zmax=percentile(vec(magnitude_mean), 99), zmin=0)
 
         # Phase
-        custom_colorscale = [
-            [0.0, "rgb(165,0,38)"],
-            [0.111111111111, "rgb(215,48,39)"],
-            [0.222222222222, "rgb(244,109,67)"],
-            [0.5, "rgb(255,255,255)"],
-            [0.777777777778, "rgb(116,173,209)"],
-            [0.888888888889, "rgb(69,117,180)"],
-            [1.0, "rgb(49,54,149)"]
+        RdBu_matplotlib = [
+            [0.0, "rgb(103,0,31)"],
+            [0.125, "rgb(178,24,43)"],
+            [0.25, "rgb(214,96,77)"],
+            [0.375, "rgb(244,165,130)"],
+            [0.5, "rgb(235,235,235)"],
+            [0.625, "rgb(146,197,222)"],
+            [0.75, "rgb(67,147,195)"],
+            [0.875, "rgb(33,102,172)"],
+            [1.0, "rgb(5,48,97)"]
         ]
 
-        phase_a_plot = plot_image(angle.(recons[1][:,:,1]), title="Phase A, venc = $(round(venc * 1e2)) cm/s", colorscale=custom_colorscale)
-        phase_b_plot = plot_image(angle.(recons[2][:,:,1]), title="Phase B, venc = $(round(venc * 1e2)) cm/s", colorscale=custom_colorscale)
+        phase_a_plot = plot_image(angle.(recons[1][:,:,1]), title="Phase A, venc = $(round(venc * 1e2)) cm/s", colorscale=RdBu_matplotlib)
+        phase_b_plot = plot_image(angle.(recons[2][:,:,1]), title="Phase B, venc = $(round(venc * 1e2)) cm/s", colorscale=RdBu_matplotlib)
 
         phase_diff = angle.(recons[1][:,:,1]) .- angle.(recons[2][:,:,1])
-        phase_diff_plot = plot_image(phase_diff,  title="Phase(A) - Phase(B), venc = $(round(venc * 1e2)) cm/s", zmin=-π, zmax=π, colorscale=custom_colorscale)
+        phase_diff_plot = plot_image(phase_diff,  title="Phase(A) - Phase(B), venc = $(round(venc * 1e2)) cm/s", zmin=-π, zmax=π, colorscale=RdBu_matplotlib)
 
-        phase_diff_masked = phase_diff .* (normalize(magnitude_mean) .> 5.5e-3)
-        phase_diff_masked[(phase_diff_masked .< -π/2) .| (phase_diff_masked .> π)] .= 0
-        phase_diff_masked_plot = plot_image(phase_diff_masked .* 1.35, title="Phase(A) - Phase(B) masked, venc = $(round(venc * 1e2)) cm/s", zmin=-π, zmax=π, colorscale=custom_colorscale)
+        masks = load("masks.jld2")
+        mask  = masks[orientation]
+
+        phase_diff_masked = map((x, m) -> m ? x : missing, (mod.(phase_diff .+ π, 2π) .- π), mask)
+        phase_diff_masked_plot = plot_image(phase_diff_masked .* 1.3, title="Phase(A) - Phase(B) masked, venc = $(round(venc * 1e2)) cm/s", zmin=-π, zmax=π, colorscale=RdBu_matplotlib)
 
         # Save results
         results_dir = "results"
@@ -117,9 +117,9 @@ for (i, orientation) in enumerate(["axial", "longitudinal"])
         end
 
         KomaMRIPlots.PlotlyJS.savefig(phase_a_plot, filename*"phase_a.png")
-        KomaMRIPlots.PlotlyJS.savefig(phase_b_plot*"phase_b.png")
-        KomaMRIPlots.PlotlyJS.savefig(magnitude_mean_plot*"magnitude_mean.png")
-        KomaMRIPlots.PlotlyJS.savefig(phase_diff_plot*"phase_diff.png")
-        KomaMRIPlots.PlotlyJS.savefig(phase_diff_masked_plot*"phase_diff_masked.png") 
+        KomaMRIPlots.PlotlyJS.savefig(phase_b_plot, filename*"phase_b.png")
+        KomaMRIPlots.PlotlyJS.savefig(magnitude_mean_plot, filename*"magnitude_mean.png")
+        KomaMRIPlots.PlotlyJS.savefig(phase_diff_plot, filename*"phase_diff.png")
+        KomaMRIPlots.PlotlyJS.savefig(phase_diff_masked_plot, filename*"phase_diff_masked.svg") 
     end
 end
