@@ -6,7 +6,7 @@ include("../../sequences/EPI.jl")
 include("rotate_aorta.jl")
 
 ## ---- Phantom ---- 
-obj = read_phantom("../../phantoms/aorta_new.phantom") # This file must be downloaded from Zenodo: https://shorturl.at/G8Dsc
+obj = read_phantom("../../phantoms/aorta.phantom") # This file must be downloaded from Zenodo: https://shorturl.at/G8Dsc
 obj = rotate_aorta(obj)
 ## ---- Scanner ---- 
 sys = Scanner()
