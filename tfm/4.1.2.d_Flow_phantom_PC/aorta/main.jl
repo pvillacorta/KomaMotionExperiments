@@ -11,7 +11,9 @@ obj = rotate_aorta(obj)
 ## ---- Scanner ---- 
 sys = Scanner()
 for (i, orientation) in enumerate(["axial", "longitudinal"])
-    for (j, v_direction) in enumerate(["vx", "vy", "vz"])
+    for (j, v_direction) in enumerate(["vx", "vy", "vz", "novenc"])
+        @info "Orientation: $(orientation), v_direction: $(v_direction)"
+
         ## ---- Sequence - PC-EPI -------
         fov = 0.11
         N_matrix = 128
@@ -30,7 +32,7 @@ for (i, orientation) in enumerate(["axial", "longitudinal"])
 
         # Phase contrast parameters
         venc = 50e-2
-        direction = Float64.([j==1, j==2, j==3])
+        direction = Float64.([v_direction=="vx", v_direction=="vy", v_direction=="vz"])
 
         # We multiply the venc by 2 since we will obtain the difference of phases 
         # between the signals produced by gre_a and gre_b: ϕA - ϕB = π: 
@@ -81,7 +83,7 @@ for (i, orientation) in enumerate(["axial", "longitudinal"])
         ## Plot and save results
         # Magnitude
         magnitude_mean = (abs.(recons[1][:,:,1]) .+   abs.(recons[2][:,:,1])) ./ 2
-        magnitude_mean_plot = plot_image(magnitude_mean,  title="Magnitude Mean(A, B)", zmax=percentile(vec(magnitude_mean), 99), zmin=0)
+        magnitude_mean_plot = plot_image(magnitude_mean,  title="Magnitude Mean(A, B)", zmax=percentile(vec(magnitude_mean), 99.5), zmin=0)
 
         # Phase
         RdBu_matplotlib = [
