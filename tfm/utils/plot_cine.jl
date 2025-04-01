@@ -19,7 +19,7 @@ function plot_cine(frames, fps; Δt=1/fps, filename="cine_recon.gif")
 				colorbar=true, 
 				# clim=(global_min, global_max)
 			),
-			title="Reconstruction (t="*Printf.@sprintf("%.3f", t)*"s)", 
+			title="Reconstruction (t="*Printf.@sprintf("%i", t*1e3)*" ms)", 
 			xlims=(minimum(x), maximum(x)), 
 			ylims=(minimum(y), maximum(y))
 		)
