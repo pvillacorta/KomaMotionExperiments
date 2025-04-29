@@ -2,9 +2,9 @@ cd(@__DIR__)
 
 using KomaMRI, CUDA, StatsBase, JLD2, JSON3
 
-include("../sequences/GRE.jl")
 include("../utils/divide_spins_ranges.jl")
 include("rotate_sUbend.jl")
+include("PC_GRE.jl")
 
 ## ---- Phantom ----
 obj = read_phantom("../phantoms/sUbend.phantom") # This file must be downloaded from Zenodo: https://shorturl.at/G8Dsc
@@ -57,7 +57,7 @@ magnitude   = []
 phase       = []
 seqs        = Sequence[]
 
-rg = 1:2
+rg = 1:7
 
 MAX_SPINS_PER_GPU = 200_000
 sequential_parts = divide_spins_ranges(length(obj), MAX_SPINS_PER_GPU)
@@ -82,8 +82,7 @@ sequential_parts = divide_spins_ranges(length(obj), MAX_SPINS_PER_GPU)
         venc_duration_rise = venc_durations_rise[i],
         balanced = true,
         crusher_duration = 1e-3,
-        crusher_area = 4 * π / (2 * π * γ) / res[1],
-        slice_thickness = slice_thickness,
+        crusher_area = 4 * π / (2 * π * γ) / res[1]
     )
     push!(seqs, seq)
 
@@ -203,11 +202,11 @@ end
 
 ## Save fig
 using Dates
-KomaMRIPlots.savefig(fig, results_dirname*"sUbend_result_koma_$(filename)_$(now()).svg", width=2200, height=900)
+KomaMRIPlots.savefig(fig, results_dirname*"sUbend_result_koma_lognitudinal_$(now()).svg", width=2200, height=900)
 
 ## Save results as julia structs
 using JLD2, Dates
-fname = results_dirname*"sUbend_result_longitudinal.jld2"
+fname = results_dirname*"sUbend_result_koma_lognitudinal_$(now()).jld2"
 save(fname, Dict("magnitude" => magnitude, "phase" => phase))
 
 
@@ -286,26 +285,23 @@ function remove_outliers(data)
 end
 
 # Filter outliers
-data_filtered = remove_outliers.([vx_gt, vx_cmrsim, vx_koma, 
-                                  vy_gt, vy_cmrsim, vy_koma,
-                                  vz_gt, vz_cmrsim, vz_koma,] .* 1e2)
+data_filtered = remove_outliers.([vx_cmrsim, vx_koma, 
+                                  vy_cmrsim, vy_koma,
+                                  vz_cmrsim, vz_koma,] .* 1e2)
 
 # Create labels and concatenate data
 all_data = vcat(data_filtered...)
-groups = vcat(fill("vx", length(data_filtered[1]) + length(data_filtered[2]) + length(data_filtered[3])),
-              fill("vy", length(data_filtered[4]) + length(data_filtered[5]) + length(data_filtered[6])),
-              fill("vz", length(data_filtered[7]) + length(data_filtered[8]) + length(data_filtered[9])))
+groups = vcat(fill("vx", length(data_filtered[1]) + length(data_filtered[2])),
+              fill("vy", length(data_filtered[3]) + length(data_filtered[4])),
+              fill("vz", length(data_filtered[5]) + length(data_filtered[6])))
 
-subgroups = vcat(fill("Groundtruth", length(data_filtered[1])),
-                 fill("CMRsim",      length(data_filtered[2])),
-                 fill("KomaMRI",     length(data_filtered[3])),
-                 fill("Groundtruth", length(data_filtered[4])),
+subgroups = vcat(fill("CMRsim",      length(data_filtered[1])),
+                 fill("KomaMRI",     length(data_filtered[2])),
+                 fill("CMRsim",      length(data_filtered[3])),
+                 fill("KomaMRI",     length(data_filtered[4])),
                  fill("CMRsim",      length(data_filtered[5])),
-                 fill("KomaMRI",     length(data_filtered[6])),
-                 fill("Groundtruth", length(data_filtered[7])),
-                 fill("CMRsim",      length(data_filtered[8])),
-                 fill("KomaMRI",     length(data_filtered[9])))
-subgroups = categorical(subgroups, levels=["Groundtruth", "CMRsim", "KomaMRI"])
+                 fill("KomaMRI",     length(data_filtered[6])))
+subgroups = categorical(subgroups, levels=["CMRsim", "KomaMRI"])
 
 ## Create the grouped boxplot
 bplot = groupedboxplot(groups, all_data, group=subgroups, bar_width=0.8, legend=:topleft, notch=true, ylabel="velocity (cm/s)")
@@ -325,29 +321,26 @@ StatsPlots.savefig(bplot_z, results_dirname*"boxplot_z.svg")
 
 
 
-
-
-
 ##
-idx = findall(mask)
-dx = -0.1008772 - res[1]/2
-dy = 0.043
-z, y, x = Float64[], Float64[], Float64[]
-for index in idx
-    push!(z, 0.0)
-    push!(y,  fov[2]/2 - (2 * index[2] - 1) * res[2] / 2 - dy)
-    push!(x, -fov[1]/2 + (2 * index[1] - 1) * res[1] / 2 - dx)
-end
-npzwrite(results_dirname*"pixel_positions_longitudinal.npz", Dict("x" => x, "y" => y, "z" => z, "pixel_size" => res[1]))
-PlotlyJS.plot(PlotlyJS.scatter(x=x,y=y,mode="markers"))
+# idx = findall(mask)
+# dx = -0.1008772 - res[1]/2
+# dy = 0.043
+# z, y, x = Float64[], Float64[], Float64[]
+# for index in idx
+#     push!(z, 0.0)
+#     push!(y,  fov[2]/2 - (2 * index[2] - 1) * res[2] / 2 - dy)
+#     push!(x, -fov[1]/2 + (2 * index[1] - 1) * res[1] / 2 - dx)
+# end
+# npzwrite(results_dirname*"pixel_positions_longitudinal.npz", Dict("x" => x, "y" => y, "z" => z, "pixel_size" => res[1]))
+# PlotlyJS.plot(PlotlyJS.scatter(x=x,y=y,mode="markers"))
 
-##
-V_GT = npzread(results_dirname*"velocity_data_longitudinal.npz")
-vz_gt = V_GT["vx"]
+# ##
+# V_GT = npzread(results_dirname*"velocity_data_longitudinal.npz")
+# vz_gt = V_GT["vx"]
 
-## PlotlyJS
-trace_gt = PlotlyJS.box(;y=vz_gt .* 1e2, name="Ground truth", boxmean=true)
-trace_koma = PlotlyJS.box(;y=vz_koma .* 1e2, name="KomaMRI", boxmean=true)
-data = [trace_gt, trace_koma]
-layout = PlotlyJS.Layout(;title="Velocity comparison Vx (longitudinal)", yaxis_title="Velocity [cm/s]")
-p = PlotlyJS.plot(data, layout)
+# ## PlotlyJS
+# trace_gt = PlotlyJS.box(;y=vz_gt .* 1e2, name="Ground truth", boxmean=true)
+# trace_koma = PlotlyJS.box(;y=vz_koma .* 1e2, name="KomaMRI", boxmean=true)
+# data = [trace_gt, trace_koma]
+# layout = PlotlyJS.Layout(;title="Velocity comparison Vx (longitudinal)", yaxis_title="Velocity [cm/s]")
+# p = PlotlyJS.plot(data, layout)

@@ -10,6 +10,7 @@ obj = read_phantom("../phantoms/aorta.phantom") # This file must be downloaded f
 obj = rotate_aorta(obj)
 ## ---- Scanner ---- 
 sys = Scanner()
+## Sequence + Simulation + Reconstruction
 for (i, orientation) in enumerate(["axial", "longitudinal"])
     for (j, v_direction) in enumerate(["vx", "vy", "vz", "novenc"])
         @info "Orientation: $(orientation), v_direction: $(v_direction)"
