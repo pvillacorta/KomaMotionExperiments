@@ -2,7 +2,7 @@ cd(@__DIR__)
 
 using KomaMRI, CUDA, StatsBase, JLD2, JSON3
 
-include("../sequences/GRE.jl")
+include("PC_GRE.jl")
 include("../utils/divide_spins_ranges.jl") 
 include("rotate_phantom.jl")
 
@@ -122,7 +122,7 @@ phase       = []
 for r in raw_data
     raw = deepcopy(r)
     # Add gaussian noise
-    σ = 7
+    σ = 8
     for i in 1:N_matrix[2]
         noise = randn(ComplexF32, (N_matrix[1], 1)) .* σ
         raw.profiles[i].data .+= noise
@@ -152,7 +152,7 @@ magnitude_mean = (magnitude[1] .+ magnitude[2]) ./ 2
 phase_diff     = -(mod.(phase[1] .- phase[2] .+ π, 2π) .- π)
 
 plot_image(magnitude_mean)
-plot_image(phase_diff; colorscale="Jet", height=300, width=600, title="Velocity map (mm/s)")
+plot_image(phase_diff; colorscale="Jet")
 
 ## ---- Save ----
 save("result_$(N_matrix[1])x$(N_matrix[2])_Nt200.jld2", Dict("raw_data" => raw_data, "magnitude" => magnitude, "phase" => phase, "magnitude_mean" => magnitude_mean, "phase_diff" => phase_diff))
