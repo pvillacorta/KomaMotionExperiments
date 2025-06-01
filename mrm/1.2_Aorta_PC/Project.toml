@@ -1,0 +1,6 @@
+[deps]
+CUDA = "052768ef-5323-5732-b1bb-66c8b64840ba"
+Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
+JLD2 = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
+KomaMRI = "6a340f8b-2cdf-4c04-99be-4953d9b66d0a"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
