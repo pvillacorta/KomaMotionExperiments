@@ -3,5 +3,6 @@
 *.jpg
 *.phantom
 *.dat
+*.h5
 *.vtu
 **/results/
