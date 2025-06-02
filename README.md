@@ -14,7 +14,7 @@ This repository contains a set of experiments related to publications of the [Ko
 
   These experiments focus on the simulation of dynamic phantoms and their visualization, as described in the thesis.
 
-  ## How To Use
+## How To Use
 
 Each of the above directories contains its own README with specific instructions  
 on how to download the scripts and reproduce the corresponding experiments.
