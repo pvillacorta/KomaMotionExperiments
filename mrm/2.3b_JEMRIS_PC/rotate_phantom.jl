@@ -12,15 +12,6 @@ function rotate_phantom(obj)
     y1 =  obj.y
     z1 =  obj.x
 
-    # Second rotation: 90° around Z (left-hand rule)
-    # dx2 = -dy1
-    # dy2 = dx1
-    # dz2 = dz1
-
-    # x2 = -y1
-    # y2 = x1
-    # z2 = z1
-
     obj_rot = copy(obj)
     obj_rot.x = x1
     obj_rot.y = y1

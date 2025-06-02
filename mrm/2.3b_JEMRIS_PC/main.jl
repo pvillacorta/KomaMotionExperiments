@@ -1,6 +1,10 @@
 cd(@__DIR__)
 
-using KomaMRI, CUDA, StatsBase, JLD2, JSON3
+import Pkg
+Pkg.activate(".")
+Pkg.instantiate()
+
+using KomaMRI, CUDA, StatsBase, JLD2
 
 include("../sequences/bipolar_gradients.jl")
 include("PC_GRE.jl")
@@ -18,9 +22,6 @@ sys = Scanner(Gmax=80e-3, Smax=200, GR_Δt=1e-5, RF_Δt=1e-5, ADC_Δt=1e-5)
 
 ## ---- Sequence ----
 fov      = [0.18, 0.13]
-# N_matrix = [92, 66]
-# N_matrix = [115, 83]
-# N_matrix = [230, 166]
 N_matrix = [461, 333]
 
 res = fov ./ N_matrix
@@ -38,21 +39,6 @@ vs                  = "vz"
 venc                = 20.0  .* 1e-2
 venc_durations_flat = 0.8   .* 1e-3
 venc_durations_rise = 0.1   .* 1e-3
-
-##
-# obj = brain_phantom2D()
-# obj.T2 .= TR/4 # Manual spoiling
-
-##
-# L = 0.1
-# dx = 1e-3
-
-# r = -L/2:dx:L/2
-# x = repeat(r, outer=(1, length(r)))
-# y = repeat(r', outer=(length(r), 1))
-
-# obj = Phantom(x=x[:], y=y[:])
-# obj.T2 .= TR/4 # Manual spoiling
 
 ## ---- Sequence ----
 seqs = Sequence[]

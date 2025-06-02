@@ -2,6 +2,7 @@ cd(@__DIR__)
 
 import Pkg
 Pkg.activate(".")
+Pkg.instantiate()
 
 using Distributed
 using CUDA
