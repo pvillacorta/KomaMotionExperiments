@@ -112,3 +112,5 @@ For a more interactive experience, we recommend running the experiments from [Vi
 This allows you to execute the scripts **line by line** `(Shift + Enter)` or **block by block** `(Alt + Shift + Enter)` directly from the Julia REPL:
 
 <img width="100%" src="./assets/vscode.png"/>
+
+In this case, it is recommended to restart Julia between running different experiments (i.e., when switching from one folder to another).
