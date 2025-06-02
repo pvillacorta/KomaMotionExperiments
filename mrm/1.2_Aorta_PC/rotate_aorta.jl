@@ -1,6 +1,6 @@
 cd(@__DIR__)
 
-using KomaMRI
+using KomaMRIBase
 
 function rotate_aorta(obj)
     ## Rotate 90º in z (Right-hand rule)

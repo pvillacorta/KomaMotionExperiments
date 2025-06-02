@@ -11,7 +11,7 @@ J Cardiovasc Magn Reson 16, 48 (2014).
 https://doi.org/10.1186/1532-429X-16-48
 """
 
-using KomaMRI
+using KomaMRIBase
 
 function ring3D_phantom()
     D = 100e-3   # [m] outter diameter
