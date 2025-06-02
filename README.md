@@ -13,3 +13,8 @@ This repository contains a set of experiments related to publications of the [Ko
   *Contributions to Advanced Magnetic Resonance Imaging Simulation: A Model for Dynamic Simulation and a Web Interface for Pulse Sequence Development and Visualization*.
 
   These experiments focus on the simulation of dynamic phantoms and their visualization, as described in the thesis.
+
+  ## How To Use
+
+Each of the above directories contains its own README with specific instructions  
+on how to download the scripts and reproduce the corresponding experiments.
