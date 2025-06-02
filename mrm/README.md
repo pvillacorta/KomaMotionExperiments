@@ -42,7 +42,7 @@ Villacorta-Aylagas P, Castillo-Passi C, Kierulf R, Menchón-Lara RM, Rodríguez-
     https://doi.org/10.1002/mrm.30010
 
 
-- **[2.3b: PC-GRE over two parallel tubes with opposite flow directions](https://github.com/pvillacorta/KomaMotionExperiments/tree/main/mrm/2.3b_Jemris_PC)**
+- **[2.3b: PC-GRE over two parallel tubes with opposite flow directions](https://github.com/pvillacorta/KomaMotionExperiments/tree/main/mrm/2.3b_JEMRIS_PC)**
 
     Spoiled GRE PC acquisition over a phantom consisting of two parallel tubes with opposite flow directions, one of which is surrounded by static tissue.
     This recreates the experiment conducted in Section 3.3.6 from:
