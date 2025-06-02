@@ -1,4 +1,4 @@
-# *Versatile and Highly Efficient MRI Simulations of Arbitrary Motion in KomaMRI*
+# Versatile and Highly Efficient MRI Simulations of Arbitrary Motion in KomaMRI
 
 This folder contains the code neccesary to recreate the experiments conducted in Sections 4 and 5 of:
 
