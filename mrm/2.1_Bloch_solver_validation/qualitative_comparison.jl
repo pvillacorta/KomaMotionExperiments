@@ -55,7 +55,6 @@ f_size = (350, 220)
 px = Plots.plot(;legend=:outertopright, ylabel="Mx", yrange=(-1.2, 0.9), xrange=((-Lt/2)*1e3, (Lt/2)*1e3), size=f_size)
 for (i, v) in enumerate(vs)
     x, y, z = get_spin_coords(objs[i].motion, objs[i].x, objs[i].y, objs[i].z, dur(seq))
-    display(z)
     Plots.plot!(z * 1e3, real.(Ms[i].xy), label="$(v * 1e2) cm/s", linewidth=2)
 end
 # My
@@ -74,4 +73,6 @@ end
 pt = Plots.plot(px, py, pz, layout=(3,1), size=(f_size[1], f_size[2] * 3), left_margin=10mm)
 
 ## Save plot
-Plots.savefig(pt, results_dirname*"magn_profiles.svg")
+Plots.savefig(pt, results_dirname*"magn_profiles.svg");
+
+println("Plots saved to ", results_dirname*"magn_profiles.svg")
