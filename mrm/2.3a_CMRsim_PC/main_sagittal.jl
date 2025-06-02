@@ -24,8 +24,6 @@ obj = load_phantom("sUbend_1p5M_spins_turb.phantom") # This function downloads t
 obj = rotate_sUbend(obj)
 obj.z .-= (maximum(obj.z) + minimum(obj.z))/2 # Center phantom
 obj.y .-= (maximum(obj.y) + minimum(obj.y))/2 # Center phantom
-# obj = obj[1:2:end]
-# obj.motion = NoMotion()
 ## ---- Scanner ---- 
 sys = Scanner(Gmax=80e-3, Smax=200, GR_Δt=1e-5, RF_Δt=1e-5, ADC_Δt=1e-5)
 

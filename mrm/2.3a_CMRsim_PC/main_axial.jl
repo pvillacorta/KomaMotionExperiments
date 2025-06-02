@@ -22,7 +22,7 @@ end
 obj = load_phantom("sUbend_4M_spins_noturb_noreset.phantom")
 dx1 = (maximum(obj.x) + minimum(obj.x)) / 2
 dy1 = (maximum(obj.y) + minimum(obj.y)) / 2
-dx2 = 4e-2 # 8 cm to center the slice position in x=0
+dx2 = 4e-2 # 4 cm to center the slice position in x=0
 obj.x .-= dx1 + dx2
 obj.y .-= dy1
 
