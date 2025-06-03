@@ -11,8 +11,8 @@ Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 Suppressor = "fd094767-a336-5f1f-9728-57cf17d0bbfb"
 
 [sources]
-KomaMRI = {rev = "fast-gpu", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
-KomaMRIBase = {rev = "fast-gpu", subdir = "KomaMRIBase", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
-KomaMRICore = {rev = "fast-gpu", subdir = "KomaMRICore", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
-KomaMRIPlots = {rev = "fast-gpu", subdir = "KomaMRIPlots", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
-KomaMRIFiles = {rev = "fast-gpu", subdir = "KomaMRIFiles", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
+KomaMRI = {url = "https://github.com/JuliaHealth/KomaMRI.jl"}
+KomaMRIBase = {subdir = "KomaMRIBase", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
+KomaMRICore = {subdir = "KomaMRICore", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
+KomaMRIPlots = {subdir = "KomaMRIPlots", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
+KomaMRIFiles = {subdir = "KomaMRIFiles", url = "https://github.com/JuliaHealth/KomaMRI.jl"}

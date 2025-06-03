@@ -14,8 +14,8 @@ StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
 
 [sources]
-KomaMRI = {rev = "fast-gpu", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
-KomaMRIBase = {rev = "fast-gpu", subdir = "KomaMRIBase", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
-KomaMRICore = {rev = "fast-gpu", subdir = "KomaMRICore", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
-KomaMRIPlots = {rev = "fast-gpu", subdir = "KomaMRIPlots", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
-KomaMRIFiles = {rev = "fast-gpu", subdir = "KomaMRIFiles", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
+KomaMRI = {url = "https://github.com/JuliaHealth/KomaMRI.jl"}
+KomaMRIBase = {subdir = "KomaMRIBase", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
+KomaMRICore = {subdir = "KomaMRICore", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
+KomaMRIPlots = {subdir = "KomaMRIPlots", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
+KomaMRIFiles = {subdir = "KomaMRIFiles", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
