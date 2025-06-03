@@ -54,7 +54,7 @@ Villacorta-Aylagas P, Castillo-Passi C, Kierulf R, Menchón-Lara RM, Rodríguez-
 
 - [`/phantoms`](https://github.com/pvillacorta/KomaMotionExperiments/tree/main/mrm/phantoms): 
 
-    This directory is intentionally left empty, as phantom files are too large to be stored on GitHub. Instead, they are hosted on [Zenodo](https://zenodo.org/records/15554360).
+    This directory is intentionally left empty, as phantom files are too large to be stored on GitHub. Instead, they are hosted on [Zenodo](https://zenodo.org/records/15588103).
 
     These phantom files will be automatically downloaded and added to this directory as the corresponding experiments in the repository are executed. Specifically:
 

@@ -18,7 +18,7 @@ function load_phantom(filename)
         downloader = Downloads.Downloader()
         downloader.easy_hook = (easy, info) -> Downloads.Curl.setopt(easy, Downloads.Curl.CURLOPT_LOW_SPEED_TIME, 0)
         # Download the file from Zenodo
-        url = "https://zenodo.org/records/15554360/files/$(filename)"
+        url = "https://zenodo.org/records/15588103/files/$(filename)"
         @info "$(filename) not found in ../phantoms. \n Downloading it from Zenodo ($(url))"
         Downloads.download(url, path; progress=show_progress)
         @info "Phantom successfully downloaded to $(path)"
