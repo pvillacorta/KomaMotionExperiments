@@ -4,7 +4,7 @@ import Pkg
 Pkg.activate(".")
 Pkg.instantiate()
 
-using KomaMRI, CUDA, StatsBase, JLD2, NPZ, Dates, StatsPlots, CategoricalArrays
+using KomaMRI, CUDA, StatsBase, JLD2, NPZ, Dates, StatsPlots, CategoricalArrays, HypothesisTests
 
 include("../utils/divide_spins_ranges.jl")
 include("../utils/load_phantom.jl")
@@ -20,7 +20,7 @@ end
 
 
 ## ---- Phantom ----
-obj = load_phantom("sUbend_1p5M_spins_turb.phantom") # This function downloads the phantom from Zenodo if it does not exist
+obj = load_phantom("sUbend_1p5M_spins_turb.phantom") # This function downloads the phantom from Zenodo if it does not exist in the ../phantoms directory
 obj = rotate_sUbend(obj)
 obj.z .-= (maximum(obj.z) + minimum(obj.z))/2 # Center phantom
 obj.y .-= (maximum(obj.y) + minimum(obj.y))/2 # Center phantom
@@ -277,6 +277,11 @@ phase_cmrsim_x = (mod.(phase_cmrsim[6] .- phase_cmrsim[1] .+ π, 2π) .- π)[mas
 vz_cmrsim = abs(vencs[2]) .* phase_cmrsim_z ./ π
 vy_cmrsim = abs(vencs[4]) .* phase_cmrsim_y ./ π
 vx_cmrsim = abs(vencs[6]) .* phase_cmrsim_x ./ π
+
+## Mann-Whitney U test
+MannWhitneyUTest(vx_cmrsim, vx_koma) # See REPL output
+MannWhitneyUTest(vy_cmrsim, vy_koma)
+MannWhitneyUTest(vz_cmrsim, vz_koma)
 
 ## BoxPlots (StatsPlots)
 # Outlier filtering function
