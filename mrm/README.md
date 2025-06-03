@@ -107,6 +107,16 @@ Each script will automatically activate its dedicated Julia environment and down
 julia main.jl
 ```
 
+or:
+
+
+```bash
+julia
+```
+```julia-repl
+julia> include("main.jl")
+```
+
 ### Optional: Running from VSCode
 For a more interactive experience, we recommend running the experiments from [Visual Studio Code (VSCode) using the Julia extension](https://code.visualstudio.com/docs/languages/julia).
 This allows you to execute the scripts **line by line** `(Shift + Enter)` or **block by block** `(Alt + Shift + Enter)` directly from the Julia REPL:
