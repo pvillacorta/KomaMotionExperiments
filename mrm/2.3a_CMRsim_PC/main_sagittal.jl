@@ -7,7 +7,7 @@ Pkg.instantiate()
 using KomaMRI, CUDA, StatsBase, JLD2, NPZ, Dates, StatsPlots, CategoricalArrays, HypothesisTests
 
 include("../utils/divide_spins_ranges.jl")
-include("../utils/load_phantom.jl")
+include("../utils/file_loader.jl")
 include("rotate_sUbend.jl")
 include("PC_GRE.jl")
 

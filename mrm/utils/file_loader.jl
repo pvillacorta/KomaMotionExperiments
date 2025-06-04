@@ -13,19 +13,24 @@ end
 
 function load_phantom(filename)
     path = "../phantoms/$(filename)"
+    download_file(path)
+    @info "Loading $(filename)... (This may take a while if the phantom is large)"
+    obj = read_phantom(path)
+    return obj
+end
+
+function download_file(path; url="https://zenodo.org/records/15591102/files/$(basename(path))")
+    filename = basename(path)
+    foldername = dirname(path)
     # Check if the file exists
     if !isfile(path)
         downloader = Downloads.Downloader()
         downloader.easy_hook = (easy, info) -> Downloads.Curl.setopt(easy, Downloads.Curl.CURLOPT_LOW_SPEED_TIME, 0)
         # Download the file from Zenodo
-        url = "https://zenodo.org/records/15554360/files/$(filename)"
-        @info "$(filename) not found in ../phantoms. \n Downloading it from Zenodo ($(url))"
+        @info "$(filename) not found in $(foldername). \n Downloading it from Zenodo ($(url))"
         Downloads.download(url, path; progress=show_progress)
-        @info "Phantom successfully downloaded to $(path)"
+        @info "$(filename) successfully downloaded to $(foldername)"
     else
-        @info "$(filename) found in ../phantoms."
+        @info "$(filename) found in $(foldername)."
     end
-    @info "Loading $(filename)... (This may take a while if the phantom is large)"
-    obj = read_phantom(path)
-    return obj
 end

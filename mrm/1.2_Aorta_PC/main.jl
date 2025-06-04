@@ -8,7 +8,7 @@ using KomaMRI, CUDA, JLD2, StatsBase
 
 include("../sequences/bipolar_gradients.jl")
 include("../sequences/EPI.jl")
-include("../utils/load_phantom.jl")
+include("../utils/file_loader.jl")
 include("rotate_aorta.jl")
 
 ## ---- Phantom ---- 

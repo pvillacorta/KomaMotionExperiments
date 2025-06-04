@@ -9,6 +9,7 @@ using KomaMRI, CUDA, StatsBase, JLD2
 include("../sequences/bipolar_gradients.jl")
 include("PC_GRE.jl")
 include("../utils/divide_spins_ranges.jl") 
+include("../utils/file_loader.jl")
 include("rotate_phantom.jl")
 
 ## ---- Phantom ----

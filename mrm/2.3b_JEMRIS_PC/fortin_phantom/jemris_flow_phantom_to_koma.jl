@@ -2,8 +2,11 @@ cd(@__DIR__)
 
 using KomaMRI
 
+include("../../utils/file_loader.jl")
+
 ## Static spins
-path = "_FlowStat - 419109 spins.dat"
+filename = "_FlowStat_419109_spins.dat"
+download_file(filename)
 
 global x, y, z = Float32[], Float32[], Float32[]
 
@@ -29,7 +32,8 @@ static = Phantom(x=x .* 1f-3, y=y .* 1f-3, z=z .* 1f-3)
 ## Dynamic spins
 using Interpolations, ProgressMeter
 
-path = "_FlowDynamic - 1650834 spins.dat"
+filename = "_FlowDynamic_1650834_spins.dat"
+download_file(filename)
 
 function leer_bloques(path)
     bloques = []
@@ -39,14 +43,14 @@ function leer_bloques(path)
     open(path, "r") do file
         for linea in eachline(file)
             if isempty(linea)
-                continue  # Ignorar líneas en blanco entre bloques
-            elseif startswith(linea, "0")  # Inicio de bloque
+                continue  # Ignore blank lines between blocks
+            elseif startswith(linea, "0")  # Block start
                 if dentro_de_bloque
                     push!(bloques, bloque_actual)
                 end
                 bloque_actual = [linea]
                 dentro_de_bloque = true
-            elseif occursin("-999999", linea)  # Fin de bloque
+            elseif occursin("-999999", linea)  # Block end
                 push!(bloques, bloque_actual)
                 dentro_de_bloque = false
                 bloque_actual = String[]
@@ -84,7 +88,7 @@ global dx, dy, dz = zeros(Float32, 1650834, Nt), zeros(Float32, 1650834, Nt), ze
         push!(zs, parse(Float32, data[6]) * 1f-3)
     end
     itpx = interpolate((ts,), xs, Gridded(Linear()))
-    # itpy = interpolate((ts,), ys, Gridded(Linear())) #Activate this if there is motion not only in x
+    # itpy = interpolate((ts,), ys, Gridded(Linear())) # Activate this if there is motion not only in x
     # itpz = interpolate((ts,), zs, Gridded(Linear()))
     dx[i, :] .= itpx.(tq) 
     # dy[i, :] .= itpy.(tq)
@@ -104,4 +108,4 @@ dynamic = Phantom(
     motion=Path(dx, dy, dz, TimeRange(0f0, tf))
 )
 
-write_phantom(static + dynamic, "fortin_float32_Nt$(Nt).phantom")
+write_phantom(static + dynamic, "../phantoms/fortin_2M_spins.phantom")
