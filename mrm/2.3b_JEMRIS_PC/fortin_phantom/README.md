@@ -10,7 +10,7 @@ The scripts and files in this directory are provided for transparency and reprod
 
 ## Overview of Files
 
-- **`.dat` files**: These are spin trajectory files downloaded automatically from [Zenodo](https://zenodo.org/records/15591102). They are formatted for use with JEMRIS.
+- **`.dat` files**: These are spin trajectory files provided by Alexandre Fortin and downloaded automatically from [Zenodo](https://zenodo.org/records/15591102). They are formatted for use with JEMRIS.
 - **`generate_jemris_phantom.jl`**: A Julia script that generates the `.h5` file representing the JEMRIS phantom.
 - **`jemris_flow_phantom_to_koma.jl`**: A Julia script that converts the spin trajectories and JEMRIS phantom into a format compatible with KomaMRI.
 

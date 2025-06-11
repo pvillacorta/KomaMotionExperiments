@@ -4,7 +4,7 @@ import Pkg
 Pkg.activate(".")
 Pkg.instantiate()
 
-using KomaMRI, CUDA, StatsBase, JLD2
+using KomaMRI, CUDA, StatsBase, JLD2, KomaMRICore.ProgressMeter
 
 include("../sequences/bipolar_gradients.jl")
 include("PC_GRE.jl")
@@ -12,8 +12,13 @@ include("../utils/divide_spins_ranges.jl")
 include("../utils/file_loader.jl")
 include("rotate_phantom.jl")
 
+## Results directory
+results_dirname = "results/"
+if !isdir(results_dirname)
+    mkdir(results_dirname)
+end
+
 ## ---- Phantom ----
-Nt = 400
 obj = load_phantom("fortin_2M_spins.phantom")
 obj.T1 .= 850e-3
 obj.T2 .= 5e-3 
@@ -43,18 +48,6 @@ venc_durations_rise = 0.1   .* 1e-3
 
 ## ---- Sequence ----
 seqs = Sequence[]
-seq = read_seq("../sequences/PC_2D_tra_1dVz_$(N_matrix[1])x$(N_matrix[2])_TE10_TR16_flipangle15.seq") # Made with JEMRIS and exported to Pulseq
-
-# for i in 1:1
-for i in findall(is_RF_on.(seq))
-    # Make RF real
-    seq[i].RF.A[1] .= abs.(seq[i].RF.A[1]) .* (-1).^(abs.(angle.(seq[i].RF.A[1])) .> 0.05)
-end
-
-seq_a = seq[1:convert(Int, length(seq)/2 -1)]
-seq_b = seq[convert(Int, length(seq)/2)+1:end-1]
-
-# seq_a = seq_b = seq
 
 seq_a, seq_b, _ = PC_GRE(
     venc,
@@ -81,11 +74,11 @@ push!(seqs, seq_a)
 push!(seqs, seq_b)
 
 ## ---- Simulation ----
-MAX_SPINS_PER_GPU = 200_000
+MAX_SPINS_PER_GPU = 250_000 # We can play with this number depending on the GPU memory available
 raw_data    = []
 @time for seq in seqs
     sim_params = KomaMRICore.default_sim_params()
-    sim_params["Nblocks"] = 5000
+    sim_params["Nblocks"] = 50 # We can also play with this number depending on the GPU memory available
     sim_params["Δt"]    = Δt
     sim_params["Δt_rf"] = Δt_rf
 
@@ -106,14 +99,9 @@ raw_data    = []
     push!(raw_data, raw)
 end
 
+fname = "result_$(N_matrix[1])x$(N_matrix[2])_Deltat$(Δt)_Deltat_RF$(Δt_rf).jld2"
 ## ---- Save ----
-save(
-    "result_$(N_matrix[1])x$(N_matrix[2])_Nt$(Nt)_Deltat$(Δt)_Deltat_RF$(Δt_rf).jld2", 
-    Dict(
-        # "magnitude" => magnitude, "phase" => phase, "magnitude_mean" => magnitude_mean, "phase_diff" => phase_diff,
-        "raw_data" => raw_data
-    )
-)
+save(results_dirname*fname, Dict("raw_data" => raw_data))
 
 ## Test slice thickness
 rf1 = seq_a[1]
@@ -127,15 +115,9 @@ plot(
 )
 
 
-
-
-
-
 ## ------------------------------------------------------------
 cd(@__DIR__)
-using KomaMRI, StatsBase, JLD2, ProgressMeter
 
-Nt = 400
 fov      = [0.18, 0.13]
 N_matrix = [461, 333]
 res = fov ./ N_matrix
@@ -169,7 +151,7 @@ mask_external = Bool.(⚪(R_external, x0_external, y0_external))
 mask = mask_internal .| mask_external
 
 ## ---- Load ----
-data = load("result_$(N_matrix[1])x$(N_matrix[2])_Nt$(Nt)_Deltat$(Δt)_Deltat_RF$(Δt_rf).jld2")
+data = load(results_dirname*fname)
 raw_data = data["raw_data"]
 
 ## ---- Reconstruction ----
@@ -236,7 +218,6 @@ end
 
 ##
 println("σ: $σ")
-println("Nt: $Nt")
 println("N_samples: $N_samples")
 println("Mean velocity internal: $(round(mean(means_internal), digits=1)) +- $(round(std(means_internal), digits=1))")
 println("Max velocity internal: $(round(mean(maxs_internal), digits=1)) +- $(round(std(maxs_internal), digits=1))")
@@ -247,5 +228,5 @@ println("Max velocity external: $(round(mean(maxs_external), digits=1)) +- $(rou
 p1 = plot_image(Vs[1], title="Velocity map (mm/s)", colorscale="Jet");
 p2 = plot_image(Vs_masked[1], title="Velocity map (mm/s) masked", colorscale="Jet");
 
-KomaMRIPlots.savefig(p1, "velocity_map.svg", width=415, height=280)
-KomaMRIPlots.savefig(p2, "velocity_map_masked.svg", width=415, height=280)
+KomaMRIPlots.savefig(p1, results_dirname*"velocity_map.svg", width=415, height=280)
+KomaMRIPlots.savefig(p2, results_dirname*"velocity_map_masked.svg", width=415, height=280)
