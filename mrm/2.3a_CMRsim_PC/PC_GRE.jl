@@ -35,8 +35,6 @@ function PC_GRE(
 	Gss = BW / (γ * slice_thickness)
 	f0 = γ * z0 * Gss
 
-	# EX = PulseDesigner.RF_sinc(-1im*amplitude, pulse_duration, sys; G=[0; 0; Gss], TBP=TBP, Δf=f0, a=0.5)
-
 	ζ_ss = Gss / sys.Smax
 	area_Gss = Gss * (pulse_duration + ζ_ss)
 	area_refocus = area_Gss / 2
@@ -143,8 +141,6 @@ function scale_rf_waveform(unit_wf, flip_angle_rad, sys::Scanner)
     # Trapecio para integración
     integral = sum((unit_wf[1:end-1] .+ unit_wf[2:end]) ./ 2) * Δt
     unit_flip_angle = gamma_rad * integral 
-
-    # amplitude = unit_wf .* (flip_angle_rad / unit_flip_angle)
 
     return (flip_angle_rad / unit_flip_angle)
 end
