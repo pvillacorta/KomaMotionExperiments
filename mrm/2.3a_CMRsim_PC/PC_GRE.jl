@@ -27,9 +27,6 @@ function PC_GRE(
 	# SINC pulse parameters 
 	BW = TBP / pulse_duration
 
-	# B_1° = 2.59947e-7 / (pulse_duration * 1e3)
-	# B1 = flip_angle*  B_1°
-
 	flip_angle_rad = flip_angle * π / 180 
 	t_rf, unit_wf = generate_unit_sinc_waveform(pulse_duration, TBP, sys; apodization=0.5)
 	amplitude = scale_rf_waveform(unit_wf, flip_angle_rad, sys)
