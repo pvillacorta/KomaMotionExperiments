@@ -2,6 +2,8 @@
 
 This repository contains a set of experiments related to publications of the [KomaMRI](https://github.com/JuliaHealth/KomaMRI.jl) project, specifically those focused on dynamic phantoms. The experiments are organized into directories, each corresponding to a different publication.
 
+Additional information about motion in KomaMRI can be found in its [official documentation](https://juliahealth.org/KomaMRI.jl).
+
 ## Directory Structure
 
 - [`/mrm`](https://github.com/pvillacorta/KomaMotionExperiments/tree/main/mrm): Contains the experiments carried out in Sections 4 and 5 of:
