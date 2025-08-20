@@ -9,11 +9,15 @@ using KomaMRI, CUDA, JLD2, StatsBase
 include("../sequences/bipolar_gradients.jl")
 include("../sequences/EPI.jl")
 include("../utils/file_loader.jl")
+include("../utils/divide_spins_ranges.jl")
 include("rotate_aorta.jl")
+
+MAX_SPINS_PER_GPU = 200_000 # Adapt this value based on your GPU VRAM size
 
 ## ---- Phantom ---- 
 obj = load_phantom("aorta_2M_spins.phantom")
 obj = rotate_aorta(obj)
+sequential_parts = divide_spins_ranges(length(obj), MAX_SPINS_PER_GPU)
 ## ---- Scanner ---- 
 sys = Scanner()
 ## Sequence + Simulation + Reconstruction
@@ -48,11 +52,24 @@ for (i, orientation) in enumerate(["axial", "longitudinal"])
         ## ---- Simulation ----
         raws = []
         for seq in seqs
+            raws_seq = []
             sim_params = KomaMRICore.default_sim_params()
             sim_params["Nblocks"] = 3000
             sim_params["Δt"]    = 8e-4
             sim_params["Δt_rf"] = 1e-5
-            push!(raws, simulate(obj[1:2_000_000], seq, sys; sim_params=sim_params))
+
+            if length(sequential_parts) > 1
+                @info "Dividing phantom ($(length(obj)) spins) into $(length(sequential_parts)) parts that will be simulated sequentially"
+            end
+
+            for (j, sequential_part) in enumerate(sequential_parts)
+                if length(sequential_parts) > 1
+                    @info "Simulating phantom part $(j)/$(length(sequential_parts))"
+                end
+                push!(raws_seq, simulate(obj[sequential_part], seq, sys))
+            end
+
+            push!(raws, reduce(+, raws_seq))
         end
 
         ## ---- Reconstruction ----
