@@ -2,11 +2,13 @@
 
 This repository contains a set of experiments related to publications of the [KomaMRI](https://github.com/JuliaHealth/KomaMRI.jl) project, specifically those focused on dynamic phantoms. The experiments are organized into directories, each corresponding to a different publication.
 
+Additional information about motion in KomaMRI can be found in its [official documentation](https://juliahealth.org/KomaMRI.jl).
+
 ## Directory Structure
 
 - [`/mrm`](https://github.com/pvillacorta/KomaMotionExperiments/tree/main/mrm): Contains the experiments carried out in Sections 4 and 5 of:
 
-  Villacorta-Aylagas P, Castillo-Passi C, Kierulf R, Menchón-Lara RM, Rodríguez-Galván JR, Sierra-Pallares J, Irarrazaval P, Alberola-López C. **Versatile and Highly Efficient MRI Simulations of Arbitrary Motion in KomaMRI**. *Magn Reson Med*. 2025.
+  Villacorta-Aylagas P, Castillo-Passi C, Kierulf R, Menchón-Lara RM, Rodríguez-Galván JR, Sierra-Pallares J, Irarrazaval P, Alberola-López C. **Versatile and Highly Efficient MRI Simulations of Arbitrary Motion in KomaMRI**. *(submitted to Magn Reson Med)*. 2025.
 
 - [`/tfm`](https://github.com/pvillacorta/KomaMotionExperiments/tree/main/tfm): Contains the experiments carried out in Section 4.1 of the Master's Thesis:
 

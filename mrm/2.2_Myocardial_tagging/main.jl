@@ -4,7 +4,7 @@ import Pkg
 Pkg.activate(".")
 Pkg.instantiate()
 
-using Distributed
+using Distributed, KomaMRIFiles
 using CUDA
 
 include("../utils/plot_cine.jl")
