@@ -1,6 +1,6 @@
 # Versatile and Highly Efficient MRI Simulations of Arbitrary Motion in KomaMRI
 
-This folder contains the code neccesary to recreate the experiments conducted in Sections 4 and 5 of:
+This folder contains the code neccesary to recreate the experiments conducted in Sections 2.4 and 3 of:
 
 Villacorta-Aylagas P, Castillo-Passi C, Kierulf R, Menchón-Lara RM, Rodríguez-Galván JR, Sierra-Pallares J, Irarrazaval P, Alberola-López C. **Versatile and Highly Efficient MRI Simulations of Arbitrary Motion in KomaMRI**. *(submitted to Magn Reson Med)*. 2025.
 
