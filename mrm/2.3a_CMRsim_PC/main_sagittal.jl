@@ -141,8 +141,6 @@ sequential_parts = divide_spins_ranges(length(obj), MAX_SPINS_PER_GPU)
     acqData.traj[1].nodes = acqData.traj[1].nodes[1:2,:] ./ maximum(2*abs.(acqData.traj[1].nodes[:]))
     acqData.traj[1].numProfiles = Ny
     acqData.traj[1].times = acqData.traj[1].times
-    # subsampleIndices
-    acqData.subsampleIndices[1] = acqData.subsampleIndices[1][1:Nx*Ny]
     # Reconstruction
     aux = @timed reconstruction(acqData, recParams)
     recon = reshape(aux.value.data, Nx, Ny, :)

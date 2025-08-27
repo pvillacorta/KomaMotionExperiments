@@ -187,8 +187,6 @@ Vs_masked = []
         acqData.traj[1].circular = false
         acqData.traj[1].nodes = acqData.traj[1].nodes[1:2,:] ./ maximum(2*abs.(acqData.traj[1].nodes[:]))
         acqData.traj[1].numProfiles = Ny
-        # subsampleIndices
-        acqData.subsampleIndices[1] = acqData.subsampleIndices[1][1:Nx*Ny]
         # Reconstruction
         aux = @timed reconstruction(acqData, recParams)
         recon = reshape(aux.value.data, Nx, Ny, :)
