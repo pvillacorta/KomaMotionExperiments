@@ -72,9 +72,6 @@ for (i, orientation) in enumerate(["axial", "longitudinal"])
             acqData.traj[1].numProfiles = N_matrix
             acqData.traj[1].times = acqData.traj[1].times
             
-            # subsampleIndices
-            acqData.subsampleIndices[1] = acqData.subsampleIndices[1][1:N_matrix^2]
-            
             # Reconstruction
             aux = @timed reconstruction(acqData, recParams)
             push!(recons, reshape(aux.value.data, Nx, Ny, :))

@@ -166,10 +166,7 @@ end
 
             acqAux.traj[1].numProfiles = N_matrix
             acqAux.traj[1].times = acqAux.traj[1].times[range]
-
-            # subsampleIndices
-            acqAux.subsampleIndices[1] = acqAux.subsampleIndices[1][1:N_matrix^2]
-
+            
             # Reconstruction
             aux = @timed reconstruction(acqAux, recParams)
             image  = reshape(aux.value.data,Nx,Ny,:)
@@ -339,10 +336,7 @@ for p in procs()[end]:-1:procs()[2]
     
                 acqAux.traj[1].numProfiles = N_matrix
                 acqAux.traj[1].times = acqAux.traj[1].times[range]
-    
-                # subsampleIndices
-                acqAux.subsampleIndices[1] = acqAux.subsampleIndices[1][1:N_matrix^2]
-    
+
                 # Reconstruction
                 aux = @timed reconstruction(acqAux, recParams)
                 image  = reshape(aux.value.data,Nx,Ny,:)
