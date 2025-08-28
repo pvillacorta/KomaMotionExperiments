@@ -1,5 +1,4 @@
 [deps]
-CUDA = "052768ef-5323-5732-b1bb-66c8b64840ba"
 KomaMRIBase = "d0bc0b20-b151-4d03-b2a4-6ca51751cb9c"
 KomaMRICore = "4baa4f4d-2ae9-40db-8331-a7d1080e3f4e"
 Measures = "442fdcdd-2543-5da2-b0f3-8c86c306513e"

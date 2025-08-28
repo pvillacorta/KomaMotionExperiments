@@ -4,7 +4,7 @@ import Pkg
 Pkg.activate(".")
 Pkg.instantiate()
 
-using KomaMRICore, CUDA, Plots
+using KomaMRICore, Plots
 
 include("yuan_sequence.jl")
 

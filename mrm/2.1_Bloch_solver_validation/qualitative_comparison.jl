@@ -8,7 +8,7 @@ import Pkg
 Pkg.activate(".")
 Pkg.instantiate()
 
-using KomaMRICore, CUDA, Plots, Measures
+using KomaMRICore, Plots, Measures
 
 include("yuan_sequence.jl")
 
