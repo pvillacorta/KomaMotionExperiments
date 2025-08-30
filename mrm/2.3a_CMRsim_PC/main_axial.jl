@@ -16,8 +16,6 @@ if !isdir(results_dirname)
     mkdir(results_dirname)
 end
 
-
-
 ## ---- Phantom ----
 obj = load_phantom("sUbend_4M_spins_noturb.phantom")
 dx1 = (maximum(obj.x) + minimum(obj.x)) / 2
@@ -82,6 +80,9 @@ rg = 1:4
 MAX_SPINS_PER_GPU = 200_000
 sequential_parts = divide_spins_ranges(length(obj), MAX_SPINS_PER_GPU)
 
+total_sims = length(vs) * length(sequential_parts)
+global counter = 0
+
 @time for (i, v) in enumerate(vs[rg])
     @info "----------- Simulating PC sequence with VENC = $(vencs[i] * 1e2) cm/s \n Direction: $v -----------"
 
@@ -119,10 +120,9 @@ sequential_parts = divide_spins_ranges(length(obj), MAX_SPINS_PER_GPU)
     end
     
     raws = []
-    for (j, sequential_part) in enumerate(sequential_parts)
-        if length(sequential_parts) > 1
-            @info "Simulating phantom part $(j)/$(length(sequential_parts))"
-        end
+    for (n, sequential_part) in enumerate(sequential_parts)
+        global counter += 1
+        @info "Simulation axial $(counter)/$(total_sims):" Venc_direction = v Venc = "$(vencs[i] * 1e2) cm/s" Phantom_part = "$n/$(length(sequential_parts))"
         push!(raws, simulate(obj[sequential_part], seq, sys))
     end
     raw = reduce(+, raws)
@@ -300,5 +300,4 @@ for index in idx
     push!(x, + dx)
 end
 npzwrite("get_gt_velocities/pixel_positions_axial.npz", Dict("x" => x, "y" => y, "z" => z, "pixel_size" => res[1]))
-PlotlyJS.plot(PlotlyJS.scatter(x=y,y=z,mode="markers"))
-
+KomaMRIPlots.plot(KomaMRIPlots.scatter(x=y,y=z,mode="markers"))

@@ -33,7 +33,7 @@ nrmse_vs_mz = Vector{Float64}[]
 for (i, vz) in enumerate(vs) # m/s <--------- VELOCITY
 	dz = vz * dur(seq)
 	obj = Phantom(x=zeros(Nspins), z=collect(range(-Lt/2-dz, Lt/2-dz, Nspins)))
-	obj.motion = Translate(0.0, 0.0, dz, TimeRange(0.0, dur(seq)), AllSpins())
+	obj.motion = translate(0.0, 0.0, dz, TimeRange(0.0, dur(seq)), AllSpins())
 
 	## Solving using DiffEquations ---------------------------------------------------
 	using OrdinaryDiffEqTsit5

@@ -31,9 +31,11 @@ TR         = 30e-3       # [s]
 flip_angle = 50          # [º]
 
 angles = [0, -90] # Sequence orientation angle (0: Axial, -90: Sagittal)
+orientations = ["axial", "sagittal"]
+global counter = 0
 
-for (i, orientation) in enumerate(["axial", "sagittal"])
-    @info "Simulating $(orientation) sequence"
+for (i, orientation) in enumerate(orientations)
+    @info "Simulating $(orientation) sequence ($(i)/$(length(orientations)))"
     θ = angles[i]
     seq = bSSFP_cine(FOV, N_matrix, TR, flip_angle, heart_rate/2, N_phases, sys) # Divide heart_rate by 2 to get 1 out of 2 cycles
     seq_rot = roty(θ / 180 * π) * seq 
@@ -50,10 +52,8 @@ for (i, orientation) in enumerate(["axial", "sagittal"])
 
     raws = []
     for (j, sequential_part) in enumerate(sequential_parts)
-        if length(sequential_parts) > 1
-            @info "Simulating phantom part $(j)/$(length(sequential_parts))"
-
-        end
+        global counter += 1
+        @info "Simulation $(counter)/$(length(orientations)*length(sequential_parts)):" Sequence = "$orientation ($i/$(length(orientations)))" Phantom_part = "$j/$(length(sequential_parts))"
         push!(raws, simulate(obj[sequential_part], seq_rot, sys; sim_params=sim_params))
     end
     raw_signal = reduce(+, raws)

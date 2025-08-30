@@ -21,8 +21,13 @@ sequential_parts = divide_spins_ranges(length(obj), MAX_SPINS_PER_GPU)
 ## ---- Scanner ---- 
 sys = Scanner()
 ## Sequence + Simulation + Reconstruction
-for (i, orientation) in enumerate(["axial", "longitudinal"])
-    for (j, v_direction) in enumerate(["vx", "vy", "vz"])
+orientations = ["axial", "longitudinal"]
+v_directions = ["vx", "vy", "vz"]
+total_sims   = 2 * length(orientations) * length(v_directions) * length(sequential_parts) 
+global counter = 0
+
+@time for (i, orientation) in enumerate(orientations)
+    for (j, v_direction) in enumerate(v_directions)
         @info "Orientation: $(orientation), v_direction: $(v_direction)"
 
         ## ---- Sequence - PC-EPI -------
@@ -51,7 +56,8 @@ for (i, orientation) in enumerate(["axial", "longitudinal"])
 
         ## ---- Simulation ----
         raws = []
-        for seq in seqs
+        for (k,seq) in enumerate(seqs)
+            polarity = k%2 == 1 ? "+" : "-"
             raws_seq = []
             sim_params = KomaMRICore.default_sim_params()
             sim_params["Nblocks"] = 3000
@@ -62,10 +68,9 @@ for (i, orientation) in enumerate(["axial", "longitudinal"])
                 @info "Dividing phantom ($(length(obj)) spins) into $(length(sequential_parts)) parts that will be simulated sequentially"
             end
 
-            for (j, sequential_part) in enumerate(sequential_parts)
-                if length(sequential_parts) > 1
-                    @info "Simulating phantom part $(j)/$(length(sequential_parts))"
-                end
+            for (n, sequential_part) in enumerate(sequential_parts)
+                global counter += 1
+                @info "Simulation $(counter)/$(total_sims):" Orientation = "$orientation ($i/$(length(orientations)))" Venc_direction = "$v_direction ($j/$(length(v_directions)))" V_enc_polarity = polarity*" ($k/$(length(seqs)))" Phantom_part = "$n/$(length(sequential_parts))"
                 push!(raws_seq, simulate(obj[sequential_part], seq, sys))
             end
 

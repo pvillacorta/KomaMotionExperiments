@@ -1,3 +1,5 @@
+@warn "This is a VERY LARGE simulation, so make sure you have enough GPU memory/devices to avoid excesive computing times"
+
 cd(@__DIR__)
 
 import Pkg
@@ -185,7 +187,6 @@ end # Global time
 
 
 ## REAL SIMULATION -----------------------> 
-@warn "This is a VERY LARGE simulation, so make sure you have enough GPU memory/devices to avoid excesive computing times"
 println("\n----------- Starting simulations --------------")
 @everywhere begin
     using KomaMRI, CUDA

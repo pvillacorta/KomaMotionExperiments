@@ -6,4 +6,3 @@
 *.h5
 *.vtu
 **/results/
-Manifest.toml

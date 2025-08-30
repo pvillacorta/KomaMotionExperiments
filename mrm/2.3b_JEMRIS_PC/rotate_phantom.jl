@@ -17,7 +17,7 @@ function rotate_phantom(obj)
     obj_rot.y = y1
     obj_rot.z = z1
 
-    obj_rot.motion = Path(
+    obj_rot.motion = path(
         dx1,
         dy1,
         dz1,

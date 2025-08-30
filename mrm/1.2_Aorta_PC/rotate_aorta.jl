@@ -15,7 +15,7 @@ function rotate_aorta(obj)
     obj_rot.y =  obj.x
     obj_rot.z =  obj.z
 
-    obj_rot.motion = FlowPath(
+    obj_rot.motion = flowpath(
         dx_rot,
         dy_rot,
         dz_rot,

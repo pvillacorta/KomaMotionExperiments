@@ -1,15 +1,9 @@
 [deps]
 CUDA = "052768ef-5323-5732-b1bb-66c8b64840ba"
 KomaMRI = "6a340f8b-2cdf-4c04-99be-4953d9b66d0a"
-KomaMRIBase = "d0bc0b20-b151-4d03-b2a4-6ca51751cb9c"
-KomaMRICore = "4baa4f4d-2ae9-40db-8331-a7d1080e3f4e"
-KomaMRIFiles = "fcf631a6-1c7e-4e88-9e64-b8888386d9dc"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
-[sources]
-KomaMRI = {url = "https://github.com/JuliaHealth/KomaMRI.jl"}
-KomaMRIBase  = {subdir = "KomaMRIBase", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
-KomaMRICore  = {subdir = "KomaMRICore", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
-KomaMRIFiles = {subdir = "KomaMRIFiles", url = "https://github.com/JuliaHealth/KomaMRI.jl"}
+[compat]
+KomaMRI = "0.9.2"

@@ -75,24 +75,27 @@ push!(seqs, seq_b)
 
 ## ---- Simulation ----
 MAX_SPINS_PER_GPU = 250_000 # We can play with this number depending on the GPU memory available
+sequential_parts = divide_spins_ranges(length(obj), MAX_SPINS_PER_GPU)
+
+total_sims   = 2 * length(sequential_parts)
+global counter = 0
+
 raw_data    = []
-@time for seq in seqs
+@time for (k,seq) in enumerate(seqs)
+    polarity = k%2 == 1 ? "+" : "-"
     sim_params = KomaMRICore.default_sim_params()
     sim_params["Nblocks"] = 50 # We can also play with this number depending on the GPU memory available
     sim_params["Δt"]    = Δt
     sim_params["Δt_rf"] = Δt_rf
-
-    sequential_parts = divide_spins_ranges(length(obj), MAX_SPINS_PER_GPU)
 
     if length(sequential_parts) > 1
         @info "Dividing phantom ($(length(obj)) spins) into $(length(sequential_parts)) parts that will be simulated sequentially"
     end
 
     raws = []
-    for (j, sequential_part) in enumerate(sequential_parts)
-        if length(sequential_parts) > 1
-            @info "Simulating phantom part $(j)/$(length(sequential_parts))"
-        end
+    for (n, sequential_part) in enumerate(sequential_parts)
+        global counter += 1
+        @info "Simulation $(counter)/$(total_sims):" V_enc_polarity = polarity*" ($k/$(length(seqs)))" Phantom_part = "$n/$(length(sequential_parts))"
         push!(raws, simulate(obj[sequential_part], seq, sys))
     end
     raw = reduce(+, raws)
@@ -108,12 +111,10 @@ rf1 = seq_a[1]
 z = range(-5., 5., 200) * 1e-3; # -5 to 5 mm
 M1 = simulate_slice_profile(rf1; z)
 
-using KomaMRIPlots.PlotlyJS
-plot(
+KomaMRIPlots.plot(
     scatter(x=z*1e3, y=abs.(M1.xy), name="Slice 1"),
     Layout(xaxis=attr(title="z [mm]"), height=300,margin=attr(t=40,l=0,r=0), title="Slice profiles for the slice-selective sequence")
 )
-
 
 ## ------------------------------------------------------------
 cd(@__DIR__)

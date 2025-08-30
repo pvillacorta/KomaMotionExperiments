@@ -35,7 +35,7 @@ for (i, v) in enumerate(vs) # m/s <--------- VELOCITY
     dz = v * dur(seq)
     obj = Phantom(x=zeros(Nspins), z=collect(range(-Lt/2-dz, Lt/2-dz, Nspins)))
     obj.motion = MotionList(
-        Translate(0.0, 0.0, dz, TimeRange(0.0, dur(seq)), AllSpins())
+        translate(0.0, 0.0, dz, TimeRange(0.0, dur(seq)), AllSpins())
     )
 
     ## Scanner

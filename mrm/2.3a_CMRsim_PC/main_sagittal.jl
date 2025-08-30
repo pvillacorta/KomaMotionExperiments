@@ -17,8 +17,6 @@ if !isdir(results_dirname)
     mkdir(results_dirname)
 end
 
-
-
 ## ---- Phantom ----
 obj = load_phantom("sUbend_1p5M_spins_turb.phantom") # This function downloads the phantom from Zenodo if it does not exist in the ../phantoms directory
 obj = rotate_sUbend(obj)
@@ -80,9 +78,11 @@ rg = 1:7
 MAX_SPINS_PER_GPU = 200_000
 sequential_parts = divide_spins_ranges(length(obj), MAX_SPINS_PER_GPU)
 
+total_sims   = length(vs) * length(sequential_parts)
+global counter = 0
+
 @time for (i, v) in enumerate(vs[rg])
     @info "----------- Simulating PC sequence with VENC = $(vencs[i] * 1e2) cm/s \n Direction: $v -----------"
-
     ## ---- Sequence ----
     seq, _, _ = PC_GRE(
         vencs[i],
@@ -117,10 +117,9 @@ sequential_parts = divide_spins_ranges(length(obj), MAX_SPINS_PER_GPU)
     end
     
     raws = []
-    for (j, sequential_part) in enumerate(sequential_parts)
-        if length(sequential_parts) > 1
-            @info "Simulating phantom part $(j)/$(length(sequential_parts))"
-        end
+    for (n, sequential_part) in enumerate(sequential_parts)
+        global counter += 1
+        @info "Simulation sagittal $(counter)/$(total_sims):" Venc_direction = v Venc = "$(vencs[i] * 1e2) cm/s" Phantom_part = "$n/$(length(sequential_parts))"
         push!(raws, simulate(obj[sequential_part], seq, sys))
     end
     raw = reduce(+, raws)
