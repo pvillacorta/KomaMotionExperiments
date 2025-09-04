@@ -1,6 +1,7 @@
 # *Contributions to Advanced Magnetic Resonance Imaging Simulation: A Model for Dynamic Simulation and a Web Interface for Pulse Sequence Development and Visualization*
 
-This folder contains the code neccesary to recreate the experiments conducted in Section 4.1 of the Master's Thesis.
+This folder contains the code neccesary to recreate the experiments conducted in Section 4.1 of the Master's Thesis. \
+[https://uvadoc.uva.es/handle/10324/77414](https://uvadoc.uva.es/handle/10324/77414)
 
 ## Demonstrative Experiments
 
