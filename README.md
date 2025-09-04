@@ -12,7 +12,8 @@ Additional information about motion in KomaMRI can be found in its [official doc
 
 - [`/tfm`](https://github.com/pvillacorta/KomaMotionExperiments/tree/main/tfm): Contains the experiments carried out in Section 4.1 of the Master's Thesis:
 
-  *Contributions to Advanced Magnetic Resonance Imaging Simulation: A Model for Dynamic Simulation and a Web Interface for Pulse Sequence Development and Visualization*.
+  *Contributions to Advanced Magnetic Resonance Imaging Simulation: A Model for Dynamic Simulation and a Web Interface for Pulse Sequence Development and Visualization*. \
+  [https://uvadoc.uva.es/handle/10324/77414](https://uvadoc.uva.es/handle/10324/77414)
 
   These experiments focus on the simulation of dynamic phantoms and their visualization, as described in the thesis.
 
