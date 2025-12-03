@@ -2,7 +2,8 @@
 
 This folder contains the code neccesary to recreate the experiments conducted in Sections 2.4 and 3 of:
 
-Villacorta-Aylagas P, Castillo-Passi C, Kierulf R, Menchón-Lara RM, Rodríguez-Galván JR, Sierra-Pallares J, Irarrazaval P, Alberola-López C. **Versatile and Highly Efficient MRI Simulations of Arbitrary Motion in KomaMRI**. *(submitted to Magn Reson Med)*. 2025.
+Villacorta-Aylagas P, Castillo-Passi C, Kierulf R, Menchón-Lara RM, Rodríguez-Galván JR, Sierra-Pallares J, Irarrazaval P, Alberola-López C. **Versatile and Highly Efficient MRI Simulations of Arbitrary Motion in KomaMRI**. *(submitted to Magn Reson Med)*. 2025. \
+[https://doi.org/10.1002/mrm.70145](https://doi.org/10.1002/mrm.70145)
 
 ## List of experiments
 
