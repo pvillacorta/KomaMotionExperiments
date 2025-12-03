@@ -8,7 +8,8 @@ Additional information about motion in KomaMRI can be found in its [official doc
 
 - [`/mrm`](https://github.com/pvillacorta/KomaMotionExperiments/tree/main/mrm): Contains the experiments carried out in Sections 4 and 5 of:
 
-  Villacorta-Aylagas P, Castillo-Passi C, Kierulf R, Menchón-Lara RM, Rodríguez-Galván JR, Sierra-Pallares J, Irarrazaval P, Alberola-López C. **Versatile and Highly Efficient MRI Simulations of Arbitrary Motion in KomaMRI**. *(submitted to Magn Reson Med)*. 2025.
+  Villacorta-Aylagas P, Castillo-Passi C, Kierulf R, Menchón-Lara RM, Rodríguez-Galván JR, Sierra-Pallares J, Irarrazaval P, Alberola-López C. **Versatile and Highly Efficient MRI Simulations of Arbitrary Motion in KomaMRI**. *(submitted to Magn Reson Med)*. 2025. \
+  [https://doi.org/10.1002/mrm.70145](https://doi.org/10.1002/mrm.70145)
 
 - [`/tfm`](https://github.com/pvillacorta/KomaMotionExperiments/tree/main/tfm): Contains the experiments carried out in Section 4.1 of the Master's Thesis:
 
